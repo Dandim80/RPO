@@ -58,13 +58,13 @@
             </table>
         </div>
 
-        <button class="submit-btn" onclick="generatePDF()">Genera PDF e Invia</button>
+        <button class="submit-btn" onclick="generatePDFAndOpenEmail()">Genera PDF e Invia Email</button>
 
-        <p class="note">Nota: Segui le istruzioni per completare la procedura di iscrizione.</p>
+        <p class="note">Nota: Dopo aver generato il PDF, si aprirà il tuo programma di posta predefinito. Ricorda di allegare manualmente il PDF prima di inviare l'email.</p>
     </div>
 
     <script>
-        function generatePDF() {
+        function generatePDFAndOpenEmail() {
             // Crea un documento PDF
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -75,30 +75,15 @@
             doc.text("RPO Telefonico: " + (document.getElementById("rpo_tel1").checked ? "Sì" : "No"), 10, 30);
             doc.text("RPO Postale: " + (document.getElementById("rpo_post1").checked ? "Sì" : "No"), 10, 40);
 
-            // Scarica il PDF localmente
+            // Salva il PDF localmente
             doc.save('Modulo_RPO.pdf');
 
-            // Usa EmailJS o un altro servizio per inviare il PDF via email
-            // sendEmail(doc.output('blob'));
+            // Prepara il client di posta con destinatario, oggetto e corpo
+            const email = "iscrizione@registrodelleopposizioni.it";
+            const subject = "Invio modulo iscrizione Registro Pubblico delle Opposizioni";
+            const body = "Salve, in allegato quanto in oggetto. Cordiali Saluti.";
+            window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
-
-        // Funzione per inviare email con EmailJS
-        function sendEmail(pdfData) {
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-                to_email: "iscrizione@registrodelleopposizioni.it",
-                attachment: pdfData
-            }).then(function(response) {
-                alert('Email inviata con successo!');
-            }, function(error) {
-                console.log('Errore: ', error);
-            });
-        }
-    </script>
-    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function(){
-            emailjs.init("YOUR_USER_ID"); // Inserisci il tuo ID di EmailJS
-        })();
     </script>
 </body>
 </html>
