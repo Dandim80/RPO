@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPO_Modulo_Email_ISCRIZIONE_v1.0.6</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .note {
+            font-size: 12px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Modulo di iscrizione al Registro delle Opposizioni</h1>
+
+        <div id="form-content">
+            <p>Inserisci i numeri di telefono e scegli l'opposizione al marketing:</p>
+            <table id="table-content">
+                <tr>
+                    <th>#</th>
+                    <th>Numero di Telefono</th>
+                    <th>RPO Telefonico</th>
+                    <th>RPO Postale</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><input type="text" id="numero1" placeholder="Inserisci numero"></td>
+                    <td><input type="checkbox" id="rpo_tel1"></td>
+                    <td><input type="checkbox" id="rpo_post1"></td>
+                </tr>
+                <!-- Altri campi come nel tuo modulo -->
+            </table>
+        </div>
+
+        <button class="submit-btn" onclick="generatePDF()">Genera PDF e Invia</button>
+
+        <p class="note">Nota: Segui le istruzioni per completare la procedura di iscrizione.</p>
+    </div>
+
+    <script>
+        function generatePDF() {
+            // Crea un documento PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Aggiunge il contenuto della pagina HTML nel PDF
+            doc.text("Modulo di iscrizione al Registro delle Opposizioni", 10, 10);
+            doc.text("Numero 1: " + document.getElementById("numero1").value, 10, 20);
+            doc.text("RPO Telefonico: " + (document.getElementById("rpo_tel1").checked ? "Sì" : "No"), 10, 30);
+            doc.text("RPO Postale: " + (document.getElementById("rpo_post1").checked ? "Sì" : "No"), 10, 40);
+
+            // Scarica il PDF localmente
+            doc.save('Modulo_RPO.pdf');
+
+            // Usa EmailJS o un altro servizio per inviare il PDF via email
+            // sendEmail(doc.output('blob'));
+        }
+
+        // Funzione per inviare email con EmailJS
+        function sendEmail(pdfData) {
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                to_email: "iscrizione@registrodelleopposizioni.it",
+                attachment: pdfData
+            }).then(function(response) {
+                alert('Email inviata con successo!');
+            }, function(error) {
+                console.log('Errore: ', error);
+            });
+        }
+    </script>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("YOUR_USER_ID"); // Inserisci il tuo ID di EmailJS
+        })();
+    </script>
+</body>
+</html>
