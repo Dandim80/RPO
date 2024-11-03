@@ -238,27 +238,35 @@ if (linea1.value == "" && linea2.value == "" && linea3.value == "" && linea4.val
        id="pdf-obj-0-21" name="operazione" style="left:69.5000%;top:90.7860%;width:3.0833%;height:2.3840%;display: none; font-size: 14.399994px;margin: 0px 0px 0px 0px;" 
        type="checkbox" value="iscrizione">
 
-<script>
+    <script>
     function inviaModulo() {
+        // Assicurati che jsPDF sia caricato correttamente
+        if (!window.jspdf) {
+            alert("Errore: jsPDF non è stato caricato correttamente.");
+            return;
+        }
+
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        // Recupera i valori dai campi del modulo
-        const nome = document.getElementById('nome').value || ''; // Aggiungi altri ID se servono
-        const email = document.getElementById('email').value || ''; 
+        // Raccogli i dati dai campi del modulo
+        const nome = document.getElementById('nome') ? document.getElementById('nome').value : '';
+        const email = document.getElementById('email') ? document.getElementById('email').value : '';
+        // Continua per tutti i campi necessari...
 
         // Aggiungi i contenuti al PDF
         doc.text(20, 20, `Nome: ${nome}`);
         doc.text(20, 30, `Email: ${email}`);
-        // Aggiungi qui gli altri campi necessari
+        // Aggiungi qui gli altri campi
 
         // Salva il PDF sul dispositivo
         doc.save("modulo_iscrizione.pdf");
 
-        // Apri il client email predefinito con il link mailto
+        // Apri il client di posta elettronica predefinito
         window.location.href = "mailto:iscrizione@registrodelleopposizioni.it?subject=Invio modulo iscrizione&body=Salve,%0D%0Ain allegato troverà il modulo di iscrizione compilato.%0D%0A%0D%0ACordiali Saluti";
     }
 </script>
+
 
 <script>pdfixUpdatePage(document.getElementById('pdf-page-1'));
         register_page_widgets(document.getElementById('pdf-page-1'));
