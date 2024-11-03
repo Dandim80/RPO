@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <meta content="PDFix SDK 7.3.2" name="creator">
 <meta content="www.pdfix.net" name="creator-url">
 <meta charset="UTF-8">
@@ -217,15 +218,50 @@ if (linea1.value == "" && linea2.value == "" && linea3.value == "" && linea4.val
 }
 }
 </script>
-<button class="pde-form-field pdf-annot pdf-obj-0-19 pdf-obj-fixed acroform-field" data-annot-id="106" data-field-id="106" form="acroform" id="pdf-obj-0-19" name="invia" style="left:43.7500%;top:90.1417%;width:12.2500%;height:3.8015%;font-size: 12.000000pt;" type="button"></button>
+<button class="pde-form-field pdf-annot pdf-obj-0-19 pdf-obj-fixed acroform-field" 
+        data-annot-id="106" data-field-id="106" form="acroform" 
+        id="pdf-obj-0-19" name="invia" 
+        style="left:43.7500%;top:90.1417%;width:12.2500%;height:3.8015%;font-size: 12.000000pt;" 
+        type="button" onclick="inviaModulo()">Invia</button>
+
 <label for="pdf-obj-0-20" style="display:none;">versione</label>
-<input checked="" class="pde-form-field pdf-annot pdf-obj-0-20 pdf-obj-fixed acroform-field pdf-btn-style-cross" data-annot-id="107" data-default-value="1.0.2" data-export-value="1.0.2" data-field-id="107" form="acroform" hidden="" id="pdf-obj-0-20" name="versione" style="left:64.9166%;top:90.7216%;width:3%;height:2.3840%;display: none; font-size: 14.400003px;margin: 0px 0px 0px 0px;" type="checkbox" value="1.0.2"></input>
+<input checked="" class="pde-form-field pdf-annot pdf-obj-0-20 pdf-obj-fixed acroform-field pdf-btn-style-cross" 
+       data-annot-id="107" data-default-value="1.0.2" data-export-value="1.0.2" 
+       data-field-id="107" form="acroform" hidden="" 
+       id="pdf-obj-0-20" name="versione" style="left:64.9166%;top:90.7216%;width:3%;height:2.3840%;display: none; font-size: 14.400003px;margin: 0px 0px 0px 0px;" 
+       type="checkbox" value="1.0.2">
+
 <label for="pdf-obj-0-21" style="display:none;">operazione</label>
-<input checked="" class="pde-form-field pdf-annot pdf-obj-0-21 pdf-obj-fixed acroform-field pdf-btn-style-cross" data-annot-id="108" data-default-value="iscrizione" data-export-value="iscrizione" data-field-id="108" form="acroform" hidden="" id="pdf-obj-0-21" name="operazione" style="left:69.5000%;top:90.7860%;width:3.0833%;height:2.3840%;display: none; font-size: 14.399994px;margin: 0px 0px 0px 0px;" type="checkbox" value="iscrizione"></input>
-</div>
-<script>pdfixUpdatePage(document.getElementById('pdf-page-1'));
-register_page_widgets(document.getElementById('pdf-page-1'));
+<input checked="" class="pde-form-field pdf-annot pdf-obj-0-21 pdf-obj-fixed acroform-field pdf-btn-style-cross" 
+       data-annot-id="108" data-default-value="iscrizione" data-export-value="iscrizione" 
+       data-field-id="108" form="acroform" hidden="" 
+       id="pdf-obj-0-21" name="operazione" style="left:69.5000%;top:90.7860%;width:3.0833%;height:2.3840%;display: none; font-size: 14.399994px;margin: 0px 0px 0px 0px;" 
+       type="checkbox" value="iscrizione">
+
+<script>
+    function inviaModulo() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Recupera i valori dai campi del modulo
+        const nome = document.getElementById('nome').value || ''; // Aggiungi altri ID se servono
+        const email = document.getElementById('email').value || ''; 
+
+        // Aggiungi i contenuti al PDF
+        doc.text(20, 20, `Nome: ${nome}`);
+        doc.text(20, 30, `Email: ${email}`);
+        // Aggiungi qui gli altri campi necessari
+
+        // Salva il PDF sul dispositivo
+        doc.save("modulo_iscrizione.pdf");
+
+        // Apri il client email predefinito con il link mailto
+        window.location.href = "mailto:iscrizione@registrodelleopposizioni.it?subject=Invio modulo iscrizione&body=Salve,%0D%0Ain allegato troverà il modulo di iscrizione compilato.%0D%0A%0D%0ACordiali Saluti";
+    }
 </script>
-</div>
+
+<script>pdfixUpdatePage(document.getElementById('pdf-page-1'));
+        register_page_widgets(document.getElementById('pdf-page-1'));
+</script>
 </body>
 </html>
