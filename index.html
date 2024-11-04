@@ -26,7 +26,6 @@
 </script>
 </head>
 
-
 <body>
 <!-- PDFix SDK 7.3.2. -->
 <script>register_field({id:'88',name:'linea1',type:'text',value:'',kids: [],exportValues:[]});
@@ -118,8 +117,7 @@ register_field({id:'107',name:'versione',type:'checkbox',value:'1.0.2',kids: [],
 <div class="pdf-obj-fixed" style="left:208px; top:1342px; width:287px; height:17px; font-size:22px;">
 <span>Dichiaro veridicità dei dati forniti</span></div>
 </div>
-<div class="pdf-page-annots" data-type="pdf-page-annots" style="width:1200px; height:1552px;
-">
+<div class="pdf-page-annots" data-type="pdf-page-annots" style="width:1200px; height:1552px;">
 <label for="pdf-obj-0-1" style="display:none;">1</label>
 <input class="pde-form-field pdf-annot pdf-obj-0-1 pdf-obj-fixed acroform-field pdf-field-comb" data-annot-id="88" data-field-id="88" form="acroform" id="pdf-obj-0-1" maxLength="12" name="linea1" required="" style="left:17.9166%;top:32.7963%;width:31.5833%;height:2.3195%;font-size: 14.313574px;" type="text" value=""></input>
 <label for="pdf-obj-0-2" style="display:none;">linea2</label>
@@ -245,29 +243,28 @@ if (linea1.value == "" && linea2.value == "" && linea3.value == "" && linea4.val
        type="checkbox" value="iscrizione">
 
     <script>
-    function inviaModulo() {
-    // Usa html2canvas per catturare l'intera pagina come immagine
-    html2canvas(document.body).then(canvas => {
-        const imgData = canvas.toDataURL('image/png'); // Converti in immagine PNG
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p', 'mm', 'a4');
+    // Funzione per inviare il modulo via email con PDF
+        function inviaModulo() {
+            // Usa html2canvas per catturare l'intera pagina come immagine
+            html2canvas(document.body).then(canvas => {
+                const imgData = canvas.toDataURL('image/png'); // Converti in immagine PNG
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
 
-        // Aggiungi l'immagine al PDF con adattamento
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const pageHeight = pdf.internal.pageSize.getHeight();
-        pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, pageHeight);
+                // Aggiungi l'immagine al PDF con adattamento
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, pageHeight);
 
-        // Salva il PDF e chiede all'utente di allegarlo manualmente
-        pdf.save("modulo_iscrizione.pdf");
+                // Salva il PDF e chiede all'utente di allegarlo manualmente
+                pdf.save("modulo_iscrizione.pdf");
 
-        // Apri il client email predefinito
-        window.location.href = "mailto:iscrizione@registrodelleopposizioni.it?subject=Invio modulo iscrizione&body=Salve,%0D%0Ain allegato troverà il modulo di iscrizione compilato.%0D%0A%0D%0ACordiali Saluti";
-    });
-}
+                // Apri il client email predefinito
+                window.location.href = "mailto:iscrizione@registrodelleopposizioni.it?subject=Invio modulo iscrizione&body=Salve,%0D%0Ain allegato troverà il modulo di iscrizione compilato.%0D%0A%0D%0ACordiali Saluti";
+            });
+        }
 
-
-
-<script>pdfixUpdatePage(document.getElementById('pdf-page-1'));
+        pdfixUpdatePage(document.getElementById('pdf-page-1'));
         register_page_widgets(document.getElementById('pdf-page-1'));
 </script>
 </body>
