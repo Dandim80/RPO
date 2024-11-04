@@ -259,7 +259,7 @@ if (linea1.value == "" && linea2.value == "" && linea3.value == "" && linea4.val
        function inviaModulo() {
             // Usa html2canvas per catturare la pagina con una risoluzione inferiore
             html2canvas(document.body, { scale: 2 }).then(canvas => {
-                const imgData = canvas.toDataURL('image/jpeg', 1); // Converti in JPEG e riduci la qualità
+                const imgData = canvas.toDataURL('image/jpeg', 1,5); // Converti in JPEG e riduci la qualità
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF('p', 'mm', 'a4');
 
