@@ -24,6 +24,18 @@
 <script>
 
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Imposta i checkbox specifici come pre-selezionati
+        const chkPrivacy = document.querySelector("input[name='chk_privacy']");
+        const chkDati = document.querySelector("input[name='chk_dati']");
+        const chkOppTel1 = document.querySelector("input[name='chk_opp_tel1']");
+        
+        if (chkPrivacy) chkPrivacy.checked = true;  // Pre-seleziona chk_privacy
+        if (chkDati) chkDati.checked = true;        // Pre-seleziona chk_dati
+        if (chkOppTel1) chkOppTel1.checked = true;  // Pre-seleziona chk_opp_tel1
+    });
+    </script>
 </head>
 
 <body>
@@ -33,7 +45,7 @@ register_field({id:'89',name:'linea2',type:'text',value:'',kids: [],exportValues
 register_field({id:'90',name:'linea3',type:'text',value:'',kids: [],exportValues:[]});
 register_field({id:'91',name:'linea4',type:'text',value:'',kids: [],exportValues:[]});
 register_field({id:'92',name:'linea5',type:'text',value:'',kids: [],exportValues:[]});
-register_field({id:'93',name:'chk_opp_tel1',type:'checkbox',value:'Off',kids: [],exportValues:['opp_tel1']});
+register_field({id:'93', name:'chk_opp_tel1', type:'checkbox', value:'Off', kids: [], exportValues:['opp_tel1']});
 register_field({id:'94',name:'chk_opp_tel2',type:'checkbox',value:'Off',kids: [],exportValues:['opp_tel2']});
 register_field({id:'95',name:'chk_opp_tel3',type:'checkbox',value:'Off',kids: [],exportValues:['opp_tel3']});
 register_field({id:'96',name:'chk_opp_tel4',type:'checkbox',value:'Off',kids: [],exportValues:['opp_tel4']});
