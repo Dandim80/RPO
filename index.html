@@ -244,28 +244,29 @@ if (linea1.value == "" && linea2.value == "" && linea3.value == "" && linea4.val
 
     <script>
     // Funzione per inviare il modulo via email con PDF
-        function inviaModulo() {
-            // Usa html2canvas per catturare l'intera pagina come immagine
-            html2canvas(document.body).then(canvas => {
-                const imgData = canvas.toDataURL('image/png'); // Converti in immagine PNG
+       function inviaModulo() {
+            // Usa html2canvas per catturare la pagina con una risoluzione inferiore
+            html2canvas(document.body, { scale: 1 }).then(canvas => {
+                const imgData = canvas.toDataURL('image/jpeg', 0.5); // Converti in JPEG e riduci la qualità
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF('p', 'mm', 'a4');
 
-                // Aggiungi l'immagine al PDF con adattamento
+                // Calcola dimensioni per adattare l'immagine al PDF
                 const pageWidth = pdf.internal.pageSize.getWidth();
                 const pageHeight = pdf.internal.pageSize.getHeight();
-                pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, pageHeight);
+                const imgWidth = canvas.width * 0.75; // Riduci dimensioni dell'immagine
+                const imgHeight = canvas.height * 0.75; // Riduci altezza proporzionalmente
 
-                // Salva il PDF e chiede all'utente di allegarlo manualmente
-                pdf.save("modulo_iscrizione.pdf");
+                // Aggiungi l'immagine al PDF
+                pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, (imgHeight * pageWidth) / imgWidth);
+
+                // Salva il PDF compresso
+                pdf.save("modulo_iscrizione_compresso.pdf");
 
                 // Apri il client email predefinito
                 window.location.href = "mailto:iscrizione@registrodelleopposizioni.it?subject=Invio modulo iscrizione&body=Salve,%0D%0Ain allegato troverà il modulo di iscrizione compilato.%0D%0A%0D%0ACordiali Saluti";
             });
         }
-
-        pdfixUpdatePage(document.getElementById('pdf-page-1'));
-        register_page_widgets(document.getElementById('pdf-page-1'));
 </script>
 </body>
 </html>
